@@ -1,20 +1,20 @@
 pipeline {
-    agent any
+    agent {label "Slave-2"}
 
     stages {
         stage('Build') {
             steps {
-                echo "Builing"
+                bat "docker build -t atuldots/jenkin-react-pipeline E:\Jenkins-slave\slave-2\workspace\MyFirstPipeline"
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
+                bat "docker rm -f jenkin-react-pipeline || true"
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                echo "docker run -it -d -p 96:80 --name jenkin-react-pipeline atuldots/jenkin-react-pipeline"
             }
         }
     }
